@@ -3,21 +3,49 @@
 
 (defn is-even? [n]
   (if (= n 0)
-    __
-    (___ (is-even? (dec n)))))
+    true
+    (not (is-even? (dec n)))))
 
 (defn is-even-bigint? [n]
-  (loop [n   n
+  (loop [n n
          acc true]
     (if (= n 0)
-      __
+      acc
       (recur (dec n) (not acc)))))
 
-(defn recursive-reverse [coll]
-  __)
+(defn recursive-reverse [[elem & rest-elems]]
+  (if (seq? rest-elems)
+    (conj (recursive-reverse rest-elems) elem)
+    [elem]))
+
+; (defn factorial [n]
+;   (letfn
+;     [(fac-tail
+;        [acc n]
+;        (if (or (= n 1) (= n 0))
+;          acc
+;          (recur (* acc n) (dec n))))]
+;    (fac-tail 1 n))) ; very slow but does not stack overflow
+
+; (defn factorial [n]
+;   (if (zero? n)
+;     1
+;     (first
+;       (nth
+;         (iterate
+;              (fn [[fact n]]
+;                [(* fact (inc n)) (inc n)]) [1N 1N])
+;         (dec n))))) ; works but slow
+
+; (defn factorial [n]
+;   (reduce * (range 1N (inc n)))) ; works
 
 (defn factorial [n]
-  __)
+  (loop [acc 1N
+         n n]
+    (if (or (= n 1) (= n 0))
+      acc
+      (recur (* acc n) (dec n))))) ;works and it's fast
 
 (meditations
   "Recursion ends with a base case"
